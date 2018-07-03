@@ -2,7 +2,7 @@ import { actionCreatorFactory } from 'typescript-fsa';
 import { upcastingReducer } from 'typescript-fsa-reducers';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import app, { State, Props, Handlers } from '@/components/app';
+import app, { Props, Handlers } from '@/components/app';
 import { State as RootState } from '@/declare';
 
 const actionCreator = actionCreatorFactory();
@@ -14,6 +14,10 @@ interface InputDefinitionPayload {
 interface UpdateDefinitionPayload {
   obj: any;
 }
+interface UpdateValuePayload {
+  key: string;
+  value: any;
+}
 
 // actionType
 
@@ -22,6 +26,8 @@ export enum ActionType {
   InputDefinition = 'INPUT_DEFINITION',
   // 定義を反映する
   UpdateDefinition = 'UPDATE_DEFINITION',
+  // 値を更新する
+  UpdateValue = 'UPDATE_VALUE',
 }
 
 // action
@@ -30,6 +36,9 @@ export const inputDefinitionAction = actionCreator<InputDefinitionPayload>(
 );
 export const updateDefinitionAction = actionCreator<UpdateDefinitionPayload>(
   ActionType.UpdateDefinition
+);
+export const updateValueAction = actionCreator<UpdateValuePayload>(
+  ActionType.UpdateValue
 );
 
 // handler
@@ -41,8 +50,8 @@ export const inputDefinitionHandler = (
   formDefinition: {
     ...state.formDefinition,
     text,
-  }
-})
+  },
+});
 export const updateDefinitionHandler = (
   state: RootState,
   { obj }: UpdateDefinitionPayload
@@ -50,30 +59,44 @@ export const updateDefinitionHandler = (
   ...state,
   formDefinition: {
     ...state.formDefinition,
-    obj
-  }
-})
+    obj,
+  },
+});
+export const updateValueHandler = (
+  state: RootState,
+  { key, value }: UpdateValuePayload
+): RootState => ({
+  ...state,
+  formValue: {
+    ...state.formValue,
+    [key]: value,
+  },
+});
 
 // reducer
 
 export const reducer = upcastingReducer<RootState, RootState>()
   .case(inputDefinitionAction, inputDefinitionHandler)
-  .case(updateDefinitionAction, updateDefinitionHandler);
+  .case(updateDefinitionAction, updateDefinitionHandler)
+  .case(updateValueAction, updateValueHandler);
 
-const mapStateToProps = ({ formDefinition }: RootState): Props => ({
+const mapStateToProps = ({ formDefinition, formValue }: RootState): Props => ({
   formDefinition,
+  formValue,
 });
 const mapDispatchToProps = (dispatch: Dispatch): Handlers => ({
   handleInputDefinition: text => {
-    dispatch(inputDefinitionAction({ text }))
+    dispatch(inputDefinitionAction({ text }));
   },
   handleUpdateDefinition: text => {
     try {
-      dispatch(updateDefinitionAction({
-        obj: JSON.parse(text)
-      }))
-    } catch(e) {
-      alert('構文エラー')
+      dispatch(
+        updateDefinitionAction({
+          obj: JSON.parse(text),
+        })
+      );
+    } catch (e) {
+      alert('構文エラー');
     }
   },
 });
