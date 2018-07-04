@@ -50,9 +50,12 @@ export interface FormTypeDynamic {
 
 export interface State {
   formDefinition: FormDefinition;
-  formValue: any;
+  formValue: FormValues;
 }
 
+export interface FormValues {
+  [x: string]: any;
+}
 const initDefinitionObj: FormDefinitionObj = {
   edit: [
     {
@@ -86,30 +89,30 @@ const initDefinitionObj: FormDefinitionObj = {
       },
     },
     {
-      label: "動的",
-      name: "dynamic",
+      label: '動的',
+      name: 'dynamic',
       form: {
         type: FormType.Dynamic,
         formAssets: [
           {
             property: {
-              label: "hoge",
-              name: "hoge",
+              label: 'hoge',
+              name: 'hoge',
               form: {
                 type: FormType.Text,
               },
-            }
+            },
           },
-        ]
-      }
-    }
+        ],
+      },
+    },
   ],
 };
 
 export const initialState: State = {
   formDefinition: {
     text: JSON.stringify(initDefinitionObj, null, '\t'),
-    obj: initDefinitionObj,
+    obj: { edit: [] },
   },
   formValue: {},
 };

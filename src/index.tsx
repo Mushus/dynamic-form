@@ -4,8 +4,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import { reducer, App } from '@/ducks/app';
-import rootSaga from '@/sagas'
-import { initialState }from '@/declare';
+import rootSaga from '@/sagas';
+import { initialState } from '@/declare';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -17,7 +17,8 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <App />
-  </Provider>
-, document.getElementById('app'));
+  </Provider>,
+  document.getElementById('app')
+);
 
-sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(rootSaga);

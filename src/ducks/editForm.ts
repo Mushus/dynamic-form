@@ -8,8 +8,10 @@ const mapStateToProps = ({
   formDefinition: {
     obj: { edit },
   },
+  formValue,
 }: RootState): Props => ({
   forms: edit,
+  values: formValue,
 });
 const mapDispatchToProps = (dispatch: Dispatch): Handlers => ({
   handleUpdateValue: (key, value) =>

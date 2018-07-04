@@ -3,7 +3,8 @@ import { upcastingReducer } from 'typescript-fsa-reducers';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import app, { Props, Handlers } from '@/components/app';
-import { State as RootState } from '@/declare';
+import { State as RootState, FormDefinition } from '@/declare';
+import { updateFormStructure } from '@/ducks/formValue';
 
 const actionCreator = actionCreatorFactory();
 
@@ -20,7 +21,6 @@ interface UpdateValuePayload {
 }
 
 // actionType
-
 export enum ActionType {
   // 定義を入力する
   InputDefinition = 'INPUT_DEFINITION',
@@ -61,6 +61,7 @@ export const updateDefinitionHandler = (
     ...state.formDefinition,
     obj,
   },
+  formValue: updateFormStructure(obj, state.formValue),
 });
 export const updateValueHandler = (
   state: RootState,
@@ -100,6 +101,7 @@ const mapDispatchToProps = (dispatch: Dispatch): Handlers => ({
     }
   },
 });
+
 export const App = connect<Props, Handlers, {}, {}>(
   mapStateToProps,
   mapDispatchToProps

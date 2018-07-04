@@ -1,17 +1,24 @@
 import * as React from 'react';
-import { FormTypeText, FormTypeTextarea } from '@/declare';
+import { FormTypeText, FormTypeTextarea, FormValues } from '@/declare';
 
 export interface Props {
   name: string;
   form: FormTypeText;
+  values: FormValues;
 }
 
 export interface Handlers {
-  onChange: (key: string, value: string) => void
+  onChange: (key: string, value: string) => void;
 }
 
 export type State = Props & Handlers;
 
-export default (state: State) => (
-  <input type="text" onChange={v => state.onChange(state.name, v.target.value) } />
-);
+export default function textForm(state: State) {
+  return (
+    <input
+      type="text"
+      value={state.values[state.name]}
+      onChange={v => state.onChange(state.name, v.target.value)}
+    />
+  );
+}

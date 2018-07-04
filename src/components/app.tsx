@@ -40,11 +40,13 @@ const DataView = styled.table`
 `;
 
 const KeyHeader = styled.td`
+  padding: 5px;
   background-color: #e8e8e8;
   font-size: 0.75px;
   width: 200px;
 `;
 const ValueHeader = styled.td`
+  padding: 5px;
   background-color: #e8e8e8;
   font-size: 0.75px;
 `;
@@ -52,29 +54,46 @@ const ValueHeader = styled.td`
 const DataRow = styled.tr`
   border: 1px solid #eee;
 `;
-const Column = styled.td `
+const Column = styled.td`
+  padding: 5px;
   font-size: 0.75px;
   white-space: pre;
   border: 1px solid #eee;
 `;
 
-export default (state: State) => (
-  <div>
-    <DefinitionEditor>
-      <Editor value={state.formDefinition.text} onChange={ e => state.handleInputDefinition(e.target.value) } />
-      <button onClick={() => state.handleUpdateDefinition(state.formDefinition.text)}>反映</button>
-    </DefinitionEditor>
-    <EditorWrapper>
-      <EditForm />
-    </EditorWrapper>
-    <DataView>
-      <DataRow>
-        <KeyHeader>key</KeyHeader><ValueHeader>value</ValueHeader>
-      </DataRow>
-      { Object.entries(state.formValue).map(([ key, value ]: [ string, any ]) => <DataRow>
-        <Column>{ key }</Column>
-        <Column>{ value }</Column>
-      </DataRow>) }
-    </DataView>
-  </div>
-);
+export default function app(state: State) {
+  return (
+    <div>
+      <DefinitionEditor>
+        <Editor
+          value={state.formDefinition.text}
+          onChange={e => state.handleInputDefinition(e.target.value)}
+        />
+        <button
+          onClick={() =>
+            state.handleUpdateDefinition(state.formDefinition.text)
+          }
+        >
+          反映
+        </button>
+      </DefinitionEditor>
+      <div>プレビュー:</div>
+      <EditorWrapper>
+        <EditForm />
+      </EditorWrapper>
+      <div>値:</div>
+      <DataView>
+        <DataRow>
+          <KeyHeader>key</KeyHeader>
+          <ValueHeader>value</ValueHeader>
+        </DataRow>
+        {Object.entries(state.formValue).map(([key, value]: [string, any]) => (
+          <DataRow key={key}>
+            <Column>{key}</Column>
+            <Column>{value}</Column>
+          </DataRow>
+        ))}
+      </DataView>
+    </div>
+  );
+}
