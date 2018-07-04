@@ -55,7 +55,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       inject: true,
-      title: 'Web Chat',
+      title: 'Dynamic Form',
       template: 'assets/index.html',
       filename: 'index.html',
     }),

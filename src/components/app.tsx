@@ -15,7 +15,9 @@ export interface Handlers {
 
 export type State = Props & Handlers;
 
-const DefinitionEditor = styled.div``
+const DefinitionEditor = styled.div`
+  margin-bottom: 15px;
+`;
 const Editor = styled.textarea`
   box-sizing: border-box;
   border: 1px solid #ddd;
@@ -24,12 +26,37 @@ const Editor = styled.textarea`
   display: box;
   resize: none;
   tab-size: 2;
-`
+`;
 
-const DataView = styled.div`
+const EditorWrapper = styled.div`
+  margin-bottom: 15px;
+`;
+
+const DataView = styled.table`
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  width: 100%;
+  margin-bottom: 15px;
+`;
+
+const KeyHeader = styled.td`
+  background-color: #e8e8e8;
+  font-size: 0.75px;
+  width: 200px;
+`;
+const ValueHeader = styled.td`
+  background-color: #e8e8e8;
+  font-size: 0.75px;
+`;
+
+const DataRow = styled.tr`
+  border: 1px solid #eee;
+`;
+const Column = styled.td `
+  font-size: 0.75px;
   white-space: pre;
-  tab-size: 2;
-`
+  border: 1px solid #eee;
+`;
 
 export default (state: State) => (
   <div>
@@ -37,9 +64,17 @@ export default (state: State) => (
       <Editor value={state.formDefinition.text} onChange={ e => state.handleInputDefinition(e.target.value) } />
       <button onClick={() => state.handleUpdateDefinition(state.formDefinition.text)}>反映</button>
     </DefinitionEditor>
-    <EditForm />
+    <EditorWrapper>
+      <EditForm />
+    </EditorWrapper>
     <DataView>
-      { JSON.stringify(state.formValue, null, '\t') }
+      <DataRow>
+        <KeyHeader>key</KeyHeader><ValueHeader>value</ValueHeader>
+      </DataRow>
+      { Object.entries(state.formValue).map(([ key, value ]: [ string, any ]) => <DataRow>
+        <Column>{ key }</Column>
+        <Column>{ value }</Column>
+      </DataRow>) }
     </DataView>
   </div>
 );
