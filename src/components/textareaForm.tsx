@@ -8,7 +8,7 @@ export interface Props {
 }
 
 export interface Handlers {
-  onChange: (key: string, value: string) => void;
+  onChange: (keys: (string | number)[], value: any) => void;
 }
 
 export type State = Props & Handlers;
@@ -17,7 +17,7 @@ export default function textareaForm(state: State) {
   return (
     <textarea
       value={state.values[state.name]}
-      onChange={v => state.onChange(state.name, v.target.value)}
+      onChange={v => state.onChange([state.name], v.target.value)}
     />
   );
 }

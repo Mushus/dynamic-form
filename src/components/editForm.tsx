@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export interface Handlers {
-  handleUpdateValue: (key: string, value: any) => void;
+  handleUpdateValue: (keys: (string | number)[], value: any) => void;
 }
 
 export type State = Props & Handlers;
@@ -30,8 +30,8 @@ export default function editForm(state: State) {
               name={v.name}
               form={v.form}
               values={state.values}
-              onChange={(key, value) =>
-                state.handleUpdateValue(key, value as any)
+              onChange={(keys, value) =>
+                state.handleUpdateValue(keys, value as any)
               }
             />
           </div>

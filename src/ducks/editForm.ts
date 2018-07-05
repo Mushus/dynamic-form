@@ -14,8 +14,8 @@ const mapStateToProps = ({
   values: formValue,
 });
 const mapDispatchToProps = (dispatch: Dispatch): Handlers => ({
-  handleUpdateValue: (key, value) =>
-    dispatch(updateValueAction({ key, value })),
+  handleUpdateValue: (keys, value) =>
+    dispatch(updateValueAction({ keys, value })),
 });
 export const EditForm = connect<Props, Handlers, {}, {}>(
   mapStateToProps,

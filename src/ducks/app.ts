@@ -4,7 +4,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import app, { Props, Handlers } from '@/components/app';
 import { State as RootState, FormDefinition } from '@/declare';
-import { updateFormStructure } from '@/ducks/formValue';
+import { updateFormStructure, updateValue } from '@/ducks/formValue';
 
 const actionCreator = actionCreatorFactory();
 
@@ -16,7 +16,7 @@ interface UpdateDefinitionPayload {
   obj: any;
 }
 interface UpdateValuePayload {
-  key: string;
+  keys: (string | number)[];
   value: any;
 }
 
@@ -61,17 +61,14 @@ export const updateDefinitionHandler = (
     ...state.formDefinition,
     obj,
   },
-  formValue: updateFormStructure(obj, state.formValue),
+  formValue: updateFormStructure(obj.edit, state.formValue),
 });
 export const updateValueHandler = (
   state: RootState,
-  { key, value }: UpdateValuePayload
+  { keys, value }: UpdateValuePayload
 ): RootState => ({
   ...state,
-  formValue: {
-    ...state.formValue,
-    [key]: value,
-  },
+  formValue: updateValue(state.formValue, keys, value),
 });
 
 // reducer

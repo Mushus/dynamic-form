@@ -32,33 +32,11 @@ const EditorWrapper = styled.div`
   margin-bottom: 15px;
 `;
 
-const DataView = styled.table`
+const DataView = styled.div`
   border-collapse: collapse;
   border: 1px solid #ddd;
   width: 100%;
   margin-bottom: 15px;
-`;
-
-const KeyHeader = styled.td`
-  padding: 5px;
-  background-color: #e8e8e8;
-  font-size: 0.75px;
-  width: 200px;
-`;
-const ValueHeader = styled.td`
-  padding: 5px;
-  background-color: #e8e8e8;
-  font-size: 0.75px;
-`;
-
-const DataRow = styled.tr`
-  border: 1px solid #eee;
-`;
-const Column = styled.td`
-  padding: 5px;
-  font-size: 0.75px;
-  white-space: pre;
-  border: 1px solid #eee;
 `;
 
 export default function app(state: State) {
@@ -82,18 +60,7 @@ export default function app(state: State) {
         <EditForm />
       </EditorWrapper>
       <div>値:</div>
-      <DataView>
-        <DataRow>
-          <KeyHeader>key</KeyHeader>
-          <ValueHeader>value</ValueHeader>
-        </DataRow>
-        {Object.entries(state.formValue).map(([key, value]: [string, any]) => (
-          <DataRow key={key}>
-            <Column>{key}</Column>
-            <Column>{value}</Column>
-          </DataRow>
-        ))}
-      </DataView>
+      <DataView>{JSON.stringify(state.formValue)}</DataView>
     </div>
   );
 }

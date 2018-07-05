@@ -21,7 +21,7 @@ export interface Props {
 }
 
 export interface Handlers {
-  onChange: (key: string, value: any) => void;
+  onChange: (keys: (string | number)[], value: any) => void;
 }
 
 export type State = Props & Handlers;
@@ -43,7 +43,7 @@ export default function variableForm(state: State) {
             name={state.name}
             form={state.form}
             values={state.values}
-            onChange={(key, value) => state.onChange(key, value)}
+            onChange={(keys, value) => state.onChange(keys, value)}
           />
         )}
         {state.form.type == FormType.Textarea && (
@@ -51,7 +51,7 @@ export default function variableForm(state: State) {
             name={state.name}
             form={state.form}
             values={state.values}
-            onChange={(key, value) => state.onChange(key, value)}
+            onChange={(keys, value) => state.onChange(keys, value)}
           />
         )}
         {state.form.type == FormType.Number && (
@@ -59,7 +59,7 @@ export default function variableForm(state: State) {
             name={state.name}
             form={state.form}
             values={state.values}
-            onChange={(key, value) => state.onChange(key, value)}
+            onChange={(keys, value) => state.onChange(keys, value)}
           />
         )}
         {state.form.type == FormType.Group && (
@@ -67,7 +67,7 @@ export default function variableForm(state: State) {
             name={state.name}
             form={state.form}
             values={state.values}
-            onChange={(key, value) => state.onChange(key, value)}
+            onChange={(keys, value) => state.onChange(keys, value)}
           />
         )}
         {state.form.type == FormType.Dynamic && (
@@ -75,7 +75,7 @@ export default function variableForm(state: State) {
             name={state.name}
             form={state.form}
             values={state.values}
-            onChange={(key, value) => state.onChange(key, value)}
+            onChange={(keys, value) => state.onChange(keys, value)}
           />
         )}
       </div>

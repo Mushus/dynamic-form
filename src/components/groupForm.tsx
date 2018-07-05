@@ -10,7 +10,7 @@ export interface Props {
 }
 
 export interface Handlers {
-  onChange: (key: string, value: any) => void;
+  onChange: (keys: (string | number)[], value: any) => void;
 }
 
 export type State = Props & Handlers;
@@ -27,10 +27,12 @@ export default function groupForm(state: State): any {
         <div key={v.name}>
           <VariableForm
             label={v.label}
-            name={`${state.name}.${v.name}`}
+            name={v.name}
             form={v.form}
             values={state.values}
-            onChange={(key, value) => state.onChange(key, value)}
+            onChange={(keys, value) =>
+              state.onChange([state.name, ...keys], value)
+            }
           />
         </div>
       ))}
